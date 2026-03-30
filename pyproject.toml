@@ -1,0 +1,33 @@
+[project]
+name = "vision-language-models-are-bows"
+version = "0.1.0"
+description = "Experiments and benchmarks for vision-language models behaving like bags of words"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "clip @ git+https://github.com/openai/CLIP.git",
+    "easydict==1.13",
+    "fairscale==0.4.13",
+    "ftfy==6.1.3",
+    "gdown==5.2.0",
+    "nltk==3.8.1",
+    "numpy==1.23.5",
+    "open-clip-torch==2.11.1",
+    "packaging==24.2",
+    "pandas==1.5.3",
+    "pillow==10.4.0",
+    "pyyaml==6.0.2",
+    "scikit-learn==1.2.2",
+    "scipy==1.10.1",
+    "spacy==3.5.4",
+    "timm==0.4.12",
+    "torch==1.13.1",
+    "torchvision==0.14.1",
+    "tqdm==4.67.1",
+    "transformers==4.26.1",
+]
+
+[tool.uv.workspace]
+members = [
+    "neg_clip",
+]

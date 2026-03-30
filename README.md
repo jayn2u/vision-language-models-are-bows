@@ -113,3 +113,61 @@ If you use this code or data, please consider citing our paper:
 
 # Contact 
 Please let us know if you have further questions or comments. You can reach out to me at `merty@stanford.edu`. 
+
+## Additional Notes: `uv run` Commands
+
+The original commands above use `python` directly. If you are using `uv`, the following commands are convenient entry points for re-running the experiments from this repository.
+
+### Setup
+
+After creating the virtual environment metadata, install the dependencies with:
+
+```bash
+uv sync
+```
+
+If you plan to use the text perturbation experiments, you may also need the SpaCy English model:
+
+```bash
+uv run python -m spacy download en_core_web_sm
+```
+
+### ARO Experiments
+
+These datasets can be downloaded automatically when `--download` is provided.
+
+```bash
+uv run python main_aro.py --dataset=VG_Relation --model-name='openai-clip:ViT-B/32' --device=cuda --download
+uv run python main_aro.py --dataset=VG_Attribution --model-name='openai-clip:ViT-B/32' --device=cuda --download
+uv run python main_aro.py --dataset=COCO_Order --model-name='openai-clip:ViT-B/32' --device=cuda --download
+```
+
+To run the same ARO experiments with NegCLIP:
+
+```bash
+uv run python main_aro.py --dataset=VG_Relation --model-name=NegCLIP --device=cuda --download
+uv run python main_aro.py --dataset=VG_Attribution --model-name=NegCLIP --device=cuda --download
+uv run python main_aro.py --dataset=COCO_Order --model-name=NegCLIP --device=cuda --download
+```
+
+### Retrieval Experiments
+
+COCO retrieval can also be downloaded automatically with `--download`:
+
+```bash
+uv run python main_retrieval.py --dataset=COCO_Retrieval --model-name='openai-clip:ViT-B/32' --device=cuda --download
+uv run python main_retrieval.py --dataset=COCO_Retrieval --model-name=NegCLIP --device=cuda --download
+```
+
+Example perturbation runs:
+
+```bash
+uv run python main_retrieval.py --dataset=COCO_Retrieval --model-name='openai-clip:ViT-B/32' --device=cuda --download --text-perturb-fn=shuffle_all_words
+uv run python main_retrieval.py --dataset=COCO_Retrieval --model-name='openai-clip:ViT-B/32' --device=cuda --download --image-perturb-fn=shuffle_patches_9
+```
+
+### Notes
+
+- `Flickr30k_Order` and `Flickr30k_Retrieval` are not downloaded automatically in this repository. They must be obtained manually.
+- The bundled shell scripts under `scripts/` do not currently pass `--download`, so running them as-is will not auto-download supported datasets.
+- If you do not have a GPU available, replace `--device=cuda` with `--device=cpu`.
